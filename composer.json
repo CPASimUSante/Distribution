@@ -129,6 +129,7 @@
             "Icap\\OAuthBundle\\": "plugin/oauth",
             "Claroline\\ResultBundle\\": "plugin/result",
             "Innova\\PathBundle\\": "plugin/path",
+            "Innova\\AudioRecorderBundle\\": "plugin/audio-recorder",
             "Claroline\\PdfGeneratorBundle\\": "plugin/pdf-generator",
             "Claroline\\DevBundle\\": "main/dev"
         }
@@ -173,6 +174,7 @@
         "Icap\\OAuthBundle\\IcapOAuthBundle",
         "Claroline\\ResultBundle\\ClarolineResultBundle",
         "Innova\\PathBundle\\InnovaPathBundle",
+        "Innova\\AudioRecorderBundle\\InnovaAudioRecorderBundle",
         "Claroline\\DevBundle\\ClarolineDevBundle"
     ]
 }
