@@ -2,9 +2,10 @@
 
 namespace Innova\AudioRecorderBundle\Twig;
 
-class AudioRecorderExtension extends \Twig_Extension {
-
-    public function getName() {
+class AudioRecorderExtension extends \Twig_Extension
+{
+    public function getName()
+    {
         return 'video_recorder_extension';
     }
 
@@ -16,24 +17,29 @@ class AudioRecorderExtension extends \Twig_Extension {
     }
     public function secondToHmsFilter($seconds)
     {
-        $hours   = floor($seconds / 3600);
+        $hours = floor($seconds / 3600);
         $minutes = floor(($seconds - ($hours * 3600)) / 60);
         $seconds = $seconds - ($hours * 3600) - ($minutes * 60);
 
         // round seconds
         $seconds = round($seconds * 100) / 100;
         $result = '';
-        if($hours > 0){
-          $result .= $hours . ' h';
+        if ($hours > 0) {
+            $result .= $hours.' h';
         }
-        if($minutes > 0){
-          if($hours > 0 ) $result .= ' ';
-          $result .= $minutes . ' min';
+        if ($minutes > 0) {
+            if ($hours > 0) {
+                $result .= ' ';
+            }
+            $result .= $minutes.' min';
         }
-        if($seconds > 0){
-          if($minutes > 0 ) $result .= ' ';
-          $result .= $seconds . ' s';
+        if ($seconds > 0) {
+            if ($minutes > 0) {
+                $result .= ' ';
+            }
+            $result .= $seconds.' s';
         }
+
         return $result;
     }
 }

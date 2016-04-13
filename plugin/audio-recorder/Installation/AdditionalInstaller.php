@@ -7,12 +7,11 @@ use Innova\AudioRecorderBundle\DataFixtures\DefaultData;
 
 class AdditionalInstaller extends BaseInstaller
 {
-
-  public function postInstall()
-  {
-      $default = new DefaultData();
-      $default->load($this->container->get('claroline.persistence.object_manager'));
-  }
+    public function postInstall()
+    {
+        $default = new DefaultData();
+        $default->load($this->container->get('claroline.persistence.object_manager'));
+    }
 
   /*public function postUninstall()
   {
@@ -24,5 +23,4 @@ class AdditionalInstaller extends BaseInstaller
     $stmt->execute();
     $stmt->closeCursor();
   }*/
-
 }

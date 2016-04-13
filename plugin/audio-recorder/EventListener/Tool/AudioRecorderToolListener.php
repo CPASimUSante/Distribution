@@ -14,9 +14,9 @@ use Innova\AudioRecorderBundle\Form\Type\AudioRecorderConfigurationType;
  */
 class AudioRecorderToolListener
 {
-  private $templating;
-  private $container;
-  private $arm;
+    private $templating;
+    private $container;
+    private $arm;
 
   /**
    * @DI\InjectParams({

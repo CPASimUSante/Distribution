@@ -3,61 +3,64 @@
 namespace Innova\AudioRecorderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * AudioRecorderConfiguration Entity
+ * AudioRecorderConfiguration Entity.
  *
  * @ORM\Table(name="innova_audio_recorder_configuration")
  * @ORM\Entity
  */
 class AudioRecorderConfiguration
 {
-
-  /**
-  * @var integer
-  *
-  * @ORM\Column(name="id", type="integer")
-  * @ORM\Id
-  * @ORM\GeneratedValue(strategy="AUTO")
-  */
+    /**
+   * @var int
+   *
+   * @ORM\Column(name="id", type="integer")
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
   protected $id;
 
   /**
-  * @var float
-  * Define the maximum time allowed per recording
-  * @ORM\Column(name="max_recording_time", type="integer", options={"default" = 0})
-  */
+   * @var float
+   * Define the maximum time allowed per recording
+   * @ORM\Column(name="max_recording_time", type="integer", options={"default" = 0})
+   */
   protected $maxRecordingTime;
 
   /**
-  * @var integer
-  * Define maximum number of try
-  * @ORM\Column(name="max_try", type="integer", options={"default" = 0})
-  */
+   * @var int
+   * Define maximum number of try
+   * @ORM\Column(name="max_try", type="integer", options={"default" = 0})
+   */
   protected $maxTry;
 
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  public function getId() {
-    return $this->id;
-  }
+    public function setMaxTry($max)
+    {
+        $this->maxTry = $max;
 
-  public function setMaxTry($max){
-    $this->maxTry = $max;
-    return $this;
-  }
+        return $this;
+    }
 
-  public function getMaxTry(){
-    return $this->maxTry;
-  }
+    public function getMaxTry()
+    {
+        return $this->maxTry;
+    }
 
-  public function setMaxRecordingTime($max){
-    $this->maxRecordingTime = $max;
-    return $this;
-  }
+    public function setMaxRecordingTime($max)
+    {
+        $this->maxRecordingTime = $max;
 
-  public function getMaxRecordingTime(){
-    return $this->maxRecordingTime;
-  }
+        return $this;
+    }
 
+    public function getMaxRecordingTime()
+    {
+        return $this->maxRecordingTime;
+    }
 }

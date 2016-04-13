@@ -142,8 +142,8 @@ class AudioRecorderManager
     /**
      * Checks if the data sent by the Ajax Form contain all mandatory fields.
      *
-     * @param Array $postData
-     * @param UploadedFile $file the blob sent by webrtc
+     * @param Array        $postData
+     * @param UploadedFile $file     the blob sent by webrtc
      */
     private function validateParams($postData, UploadedFile $file)
     {

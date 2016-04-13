@@ -20,7 +20,6 @@ use Claroline\CoreBundle\Entity\Resource\ResourceNode;
  */
 class AudioRecorderListener
 {
-
     private $container;
     private $manager;
 
@@ -51,7 +50,7 @@ class AudioRecorderListener
                 ->get('router')
                 ->generate('claro_resource_open', array(
             'node' => $resource->getResourceNode()->getId(),
-            'resourceType' => 'file'
+            'resourceType' => 'file',
                 )
         );
         $event->setResponse(new RedirectResponse($route));
@@ -60,6 +59,7 @@ class AudioRecorderListener
 
     /**
      * @DI\Observe("create_innova_audio_recorder")
+     *
      * @param CreateResourceEvent $event
      */
     public function onCreate(CreateResourceEvent $event)
@@ -90,7 +90,6 @@ class AudioRecorderListener
      */
     public function onCreateForm(CreateFormResourceEvent $event)
     {
-
         $config = $this->manager->getConfig();
         // Create form POPUP
         $content = $this->container->get('templating')->render(
@@ -98,7 +97,7 @@ class AudioRecorderListener
                 array(
                   'resourceType' => 'innova_audio_recorder',
                   'maxTry' => $config->getMaxTry(),
-                  'maxTime' => $config->getMaxRecordingTime()
+                  'maxTime' => $config->getMaxRecordingTime(),
                 )
         );
         $event->setResponseContent($content);
@@ -116,8 +115,8 @@ class AudioRecorderListener
           ->getResourceNode()
           ->getWorkspace()
           ->getCode(); */
-        $pathName = $this->container->getParameter('claroline.param.files_directory') .
-                DIRECTORY_SEPARATOR .
+        $pathName = $this->container->getParameter('claroline.param.files_directory').
+                DIRECTORY_SEPARATOR.
                 $event->getResource()->getHashName();
 
         if (file_exists($pathName)) {
@@ -154,16 +153,16 @@ class AudioRecorderListener
         $newFile->setSize($resource->getSize());
         $newFile->setName($resource->getName());
         $newFile->setMimeType($resource->getMimeType());
-        $hashName = 'WORKSPACE_' . $workspace->getId() .
-                $ds .
-                $this->container->get('claroline.utilities.misc')->generateGuid() .
-                '.' .
+        $hashName = 'WORKSPACE_'.$workspace->getId().
+                $ds.
+                $this->container->get('claroline.utilities.misc')->generateGuid().
+                '.'.
                 pathinfo($resource->getHashName(), PATHINFO_EXTENSION);
         $newFile->setHashName($hashName);
         $fileDir = $this->container->getParameter('claroline.param.files_directory');
-        $filePath = $fileDir . $ds . $resource->getHashName();
-        $newPath = $fileDir . $ds . $hashName;
-        $workspaceDir = $fileDir . $ds . 'WORKSPACE_' . $workspace->getId();
+        $filePath = $fileDir.$ds.$resource->getHashName();
+        $newPath = $fileDir.$ds.$hashName;
+        $workspaceDir = $fileDir.$ds.'WORKSPACE_'.$workspace->getId();
 
         if (!is_dir($workspaceDir)) {
             mkdir($workspaceDir);
@@ -180,12 +179,10 @@ class AudioRecorderListener
      */
     public function onDownload(DownloadResourceEvent $event)
     {
-
         $event->setItem(
                 $this->container
-                        ->getParameter('claroline.param.files_directory') . DIRECTORY_SEPARATOR . $event->getResource()->getHashName()
+                        ->getParameter('claroline.param.files_directory').DIRECTORY_SEPARATOR.$event->getResource()->getHashName()
         );
         $event->stopPropagation();
     }
-
 }
