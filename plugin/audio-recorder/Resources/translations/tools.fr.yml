@@ -6,7 +6,7 @@ config_update_success: Mise à jour de la configuration de l'enregistreur audio 
 innova_audio_recorder_tool: Configuration de l'enregistreur audio (pour la plateforme)
 
 # m
-audio_recorder_configuration_max_try: Nombre d'essais maximum (0 = infini)
+audio_recorder_configuration_max_try: Nombre d'essais maximum
 audio_recorder_configuration_max_recording_time: Temps d'enregistrement maximum (Secondes, 0 = infini)
 
 # s
