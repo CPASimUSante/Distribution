@@ -1,9 +1,8 @@
 {% block stylesheets %}
-  {% stylesheets debug = false filter = 'cssmin' output = '/bundles/innovaaudiorecorder/css/innova-audio-recorder.min.css'
-  "@InnovaAudioRecorderBundle/Resources/public/css/app.css"
- %}
-  <link rel="stylesheet" href="{{ asset_url }}" screen="media"/>
-  <link href="{{asset('/bundles/innovaaudiorecorder/css/innova-audio-recorder.min.css')}}" rel="stylesheet" media="screen"/>
+  {% stylesheets debug=false filter="cssrewrite, cssmin" output="vendor/claroline/plugin/audiorecorder/css/audio-recorder.min.css"
+   "@InnovaAudioRecorderBundle/Resources/style/audio-recorder.css"
+  %}
+      <link rel="stylesheet" href="{{ asset_url }}" screen="media"/>
   {% endstylesheets %}
 {% endblock %}
 
@@ -47,6 +46,15 @@
               {% endif %}
             </div>
           </div>
+          <!-- stop recording info -->
+          <div class="row stop-recording-message" style="display:none;">
+            <div class="col-md-12 text-center">
+              <hr/>
+              <div class="alert-info">
+                {{ 'end_recording_message'|trans({}, 'innova_audio_recorder') | raw }}
+              </div>
+            </div>
+          </div>
           <!-- max attempt reached -->
           <div class="row max-try-reached" style="display:none;">
             <div class="col-md-12 text-center">
@@ -65,15 +73,6 @@
               </div>
             </div>
           </div>
-          <!-- stop recording info -->
-          <div class="row stop-recording-message" style="display:none;">
-            <div class="col-md-12 text-center">
-              <hr/>
-              <div class="alert-info">
-                {{ 'end_recording_message'|trans({}, 'innova_audio_recorder') | raw }}
-              </div>
-            </div>
-          </div>
           <hr/>
           <!-- my recordings -->
           <div class="row">
@@ -85,7 +84,7 @@
                 <table class="table">
                   {% for index in 0..maxTry - 1 %}
                     <tr id="tr-preview-{{index}}" class="recorded-audio-row" data-index="{{index}}">
-                      <td>{{index + 1}}.</td>
+                      <td><strong>{{index + 1}}.</strong></td>
                       <td class="actions"></td>
                       <td class="text-right"><input type="radio" name="audio-selected" disabled class="select"></td>
                     </tr>
@@ -95,7 +94,6 @@
             </div>
           </div>
         </div>
-      
         <!-- progress bar -->
         <div class="row progress-row" style="display:none;">
           <div class="col-md-12">
@@ -117,7 +115,6 @@
       </div>
       <div class="modal-footer">
         <div id="progress"></div>
-        <button type="button" role="button" class="btn btn-default" data-dismiss="modal">{{ 'cancel'|trans({}, 'platform') }}</button>
         <button type="button" role="button" id="submitButton" disabled="disabled" class="btn btn-primary">{{ 'ok'|trans({}, 'platform') }}</button>
       </div>
     </div>

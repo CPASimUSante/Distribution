@@ -41,29 +41,6 @@ function handleDataAvailable(event) {
 
 $('.modal').on('shown.bs.modal', function() {
   console.log('modal shown');
-  // file name check and change
-  $("#resource-name-input").on("change paste keyup", function() {
-    if ($(this).val() === '') { // name is blank
-      $(this).attr('placeholder', 'provide a name for the resource');
-      $('#submitButton').prop('disabled', true);
-    } else if ($('input:checked').length > 0) { // name is set and a recording is selected
-      $('#submitButton').prop('disabled', false);
-    }
-    // remove blanks
-    $(this).val(function(i, val) {
-      return val.replace(' ', '_');
-    });
-  });
-
-  $('#audio-record-start').on('click', recordStream);
-  $('#audio-record-stop').on('click', stopRecording);
-  $('#btn-audio-download').on('click', download);
-  $('#submitButton').on('click', uploadAudio);
-
-  maxTry = parseInt($('#maxTry').val());
-  maxTime = parseInt($('#maxTime').val());
-
-  currentTime = 0;
 
 });
 
@@ -135,7 +112,7 @@ function gumSuccess(stream) {
   }
   window.stream = stream;
   createVolumeMeter();
-  $('#audio-record-start').prop('disabled', '');
+  init();
 }
 
 // getUserMedia Error Callback
@@ -144,6 +121,35 @@ function gumError(error) {
   if (isDebug) {
     console.log(msg, error);
   }
+}
+
+function init(){
+  // file name check and change
+  $("#resource-name-input").on("change paste keyup", function() {
+    if ($(this).val() === '') { // name is blank
+      $(this).attr('placeholder', 'provide a name for the resource');
+      $('#submitButton').prop('disabled', true);
+    } else if ($('input:checked').length > 0) { // name is set and a recording is selected
+      $('#submitButton').prop('disabled', false);
+    }
+    // remove blanks
+    $(this).val(function(i, val) {
+      return val.replace(' ', '_');
+    });
+  });
+
+  $('#audio-record-start').on('click', recordStream);
+  $('#audio-record-stop').on('click', stopRecording);
+  $('#btn-audio-download').on('click', download);
+  $('#submitButton').on('click', uploadAudio);
+
+  maxTry = parseInt($('#maxTry').val());
+  maxTime = parseInt($('#maxTime').val());
+
+
+  $('#audio-record-start').prop('disabled', '');
+
+  currentTime = 0;
 }
 
 function recordStream() {
@@ -188,16 +194,19 @@ function stopRecording(maxTimeReached) {
 
   if (nbTry < maxTry) {
     $('#audio-record-start').prop('disabled', false);
-    $('#audio-record-start').show();
-    $('#audio-record-stop').hide();
+
   }  else {
+    $('#audio-record-start').prop('disabled', true);
     $('.max-try-reached').show();
   }
+
+  $('#audio-record-stop').hide();
+  $('#audio-record-start').show();
 
   if(maxTimeReached === true){
     $('.max-time-reached').show();
   } else {
-    $('.stop-recording-message').show()
+    $('.stop-recording-message').show();
   }
   // keep recording time
   let recLength = currentTime;
@@ -301,8 +310,9 @@ function deleteAudio(elem) {
   nbTry--;
   if (nbTry < maxTry) {
     $('#audio-record-start').prop('disabled', false);
-    $('#audio-record-stop').hide();
-    $('#audio-record-start').show();
+    $('.stop-recording-message').hide();
+    $('.max-try-reached').hide();
+    $('.max-time-reached').hide();
   }
 
 }
@@ -312,6 +322,7 @@ function uploadAudio() {
   let index = -1;
   index = $('input:checked').closest('.recorded-audio-row').attr('data-index');
   if (index > -1) {
+    $('#submitButton').prop('disabled', true);
     let blob = aBlobs[index];
     let formData = new FormData();
     // nav should be mandatory
@@ -356,6 +367,7 @@ function xhr(url, data, progress, callback) {
       }
       $('.progress-row').hide();
       $('.error-row').show();
+      $('#submitButton').prop('disabled', true);
     }
   };
 
